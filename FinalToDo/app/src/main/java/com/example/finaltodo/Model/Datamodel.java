@@ -1,7 +1,14 @@
 package com.example.finaltodo.Model;
 
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "Task_table")
 public class Datamodel {
     //    Dictionary<String,String> taskData=new Hashtable<String, String>();
+    @PrimaryKey (autoGenerate = true)
+            private int taskId;
     String category;
     String categoryCount;
     boolean addTask;
@@ -19,6 +26,11 @@ public class Datamodel {
     boolean saveButton;
     boolean cancel;
 
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+    public int getTaskId(){return taskId;}
+
     public String gettask() {
         return task;
     }
@@ -31,9 +43,9 @@ public class Datamodel {
         this.task = task;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+//    public void setCategory(String category) {
+//        this.category = category;
+//    }
 
     public void setCategoryCount(String categoryCount) {
         this.categoryCount = categoryCount;
@@ -126,4 +138,7 @@ public class Datamodel {
     public boolean getCancel() {
         return cancel;
     }
+
+
+    public Datamodel(String category){this.category=category;}
 }

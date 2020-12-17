@@ -49,4 +49,5 @@
             android:layout_height="39dp"
             app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>

@@ -1,5 +1,6 @@
 package com.example.finaltodo.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,18 @@ import com.example.finaltodo.R;
 import com.example.finaltodo.RecyclerFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
-    ArrayList<Datamodel> dataholder;
+    List<Datamodel> dataholder;
 
 
 
-    public myadapter(ArrayList<Datamodel> dataholder) {
-        this.dataholder = dataholder;
+    public myadapter() {
 
-
+     this.dataholder= new ArrayList<Datamodel>();
+        Log.e(" testing","  constructor  ");
+//        Log.e("arry tetting",""+dataholder.size());
     }
 
     @NonNull
@@ -37,6 +40,8 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
     @Override
     public void onBindViewHolder(@NonNull myadapter.myviewholder holder, int position) {
         holder.text_view_categorycount.setText(dataholder.get(position).getCategoryCount());
+        Log.e(" testing","    "+dataholder.get(position).getCategory()+"   ");
+
         holder.text_view_title.setText(dataholder.get(position).getCategory());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,5 +72,10 @@ public class myadapter extends RecyclerView.Adapter<myadapter.myviewholder> {
 
 
         }
+    }
+    public void setTask(List<Datamodel> task){
+        this.dataholder = task;
+
+        notifyDataSetChanged();
     }
 }

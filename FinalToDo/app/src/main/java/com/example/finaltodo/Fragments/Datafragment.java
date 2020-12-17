@@ -13,18 +13,21 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finaltodo.Adapters.myadapter;
+import com.example.finaltodo.Model.Datamodel;
 import com.example.finaltodo.R;
 import com.example.finaltodo.Repo.DataFragmentRepo;
 import com.example.finaltodo.ViewModel.FragmentViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Datafragment extends Fragment {
 
@@ -33,7 +36,7 @@ public class Datafragment extends Fragment {
     FloatingActionButton add;
     FragmentViewModel viewm;
     DataFragmentRepo repo;
-    private myadapter myadap;
+   // private myadapter myadap = new myadapter();
 
 
     @Override
@@ -69,7 +72,8 @@ public class Datafragment extends Fragment {
 //        dataholder.add(da6);
 //        datamodel da7 = new datamodel("Party");
 //        dataholder.add(da7);
-//        recyclerView.setAdapter(new myadapter(dataholder));
+//     recyclerView.setAdapter(new myadapter(dataholder));
+
 
 
         return view;
@@ -124,12 +128,30 @@ public class Datafragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState){
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        myadapter myadap = new myadapter();
         viewm= ViewModelProviders.of(this.getActivity()).get(FragmentViewModel.class);
-        recyclerView.setAdapter(new myadapter(viewm.getobjList()));
-        //get variables needed to display
+        recyclerView.setAdapter(myadap);
+
+        viewm.gettaskLiveData().observe(getActivity(), new Observer<List<Datamodel>>() {
+            @Override
+            public void onChanged(List<Datamodel> tasks) {
+                if (tasks != null) {
+                    myadap.setTask(tasks);
+                }
+            }
+        });
+
+//        get variables needed to display
+//    }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     ItemTouchHelper.SimpleCallback itemTouchHelperCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
